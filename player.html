@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Player</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="referrer" content="never" />
+<meta name="referrer" content="no-referrer" />
+<style>
+	html,
+	body {
+		width: 100%;
+		height: 100%;
+		margin: auto;
+		overflow: hidden;
+		background:  #000000;
+	}
+    </style>
+</head>
+<body>
+    <iframe width="100%" height="100%" frameBorder="0" id="mse"></iframe>
+    <video id="vidt" width="100%" height="100%"controls>
+      <img id="vidi" src="Icon.jpg">
+      <source id="vidf" src="" type="video/mp4">
+    </video>
+
+<script>
+    //https://www.mp4upload.com/embed-pwwuv53wq83s.html
+    //68747470733A2F2F7777772E6D703475706C6F61642E636F6D2F656D6265642D7077777576353377713833732E68746D6C
+    function getThumbnailUrl(videoUrl) {
+        // Usa una expresión regular para extraer el dominio y el ID del video
+        const urlMatch = videoUrl.match(/^(https:\/\/[^\/]+)\/v2\/([^\/]+)\.mp4/);
+
+        if (urlMatch && urlMatch[1] && urlMatch[2]) {
+            // Extrae el dominio y el ID del video
+            const baseUrl = urlMatch[1];
+            const videoId = urlMatch[2];
+            
+            // Construye la URL de la miniatura usando el dominio extraído
+            const thumbnailUrl = `${baseUrl}/thumbs/${videoId}.jpg`;
+            
+            return thumbnailUrl;
+        } else {
+            // Si no se puede extraer el ID del video, devuelve un mensaje de error
+            throw new Error('No se pudo extraer el dominio o el ID del video.');
+        }
+    }
+    function hex2a(hexx) {
+        var hex = hexx.toString();//force conversion
+        var str = '';
+        for (var i = 0; i < hex.length; i += 2)
+            str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+        return str;
+    }
+    var file = window.location.hash.split('#')[1];
+    file = hex2a(file); // returns '2460'
+	console.log(file);
+    mse.src=file
+    if (file.toLowerCase().includes(".mp4")) {
+        //if (true){
+        vidf.src=file
+        vidt.poster = getThumbnailUrl(file)
+        vidi.src = file;
+        mse.remove();
+
+    }else {
+        mse.src=file
+        vidt.remove();
+    }
+
+</script>
+
+</body>
+</html>
